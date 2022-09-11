@@ -1,1 +1,0 @@
-INSERT INTO public."Players" VALUES ('02.02.2022', 1, 3, 'Kategorie 2', 'Beach61 Berlin', 1, 8);

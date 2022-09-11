@@ -1,0 +1,1 @@
+INSERT INTO "Participations" VALUES (1, 1);

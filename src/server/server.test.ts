@@ -1,14 +1,14 @@
-import request from 'supertest';
-import { Express } from 'express';
-import { setupExpressServer } from './server';
+import request from 'supertest'
+import { Express } from 'express'
+import { setupExpressServer } from './server'
 
-let server: Express;
+let server: Express
 beforeAll(() => {
   setupExpressServer().then((ser) => {
-    server = ser;
-    console.log('Received Server');
-  });
-});
+    server = ser
+    console.log('Received Server')
+  })
+})
 
 describe('GET /', () => {
   it('should return 200 & hello world', (done) => {
@@ -17,10 +17,10 @@ describe('GET /', () => {
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function (err, res) {
-        if (err) return done(err);
-        expect(res.body).toContain('Hello World!');
-        console.log(res.body);
-        return done();
-      });
-  });
-});
+        if (err) return done(err)
+        expect(res.body).toContain('Hello World!')
+        console.log(res.body)
+        return done()
+      })
+  })
+})
