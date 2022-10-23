@@ -4,6 +4,6 @@
 - scrape tournament infos 
 - execute for 5000 teams 
 - execute for 5000 players 
-
+- forbid double entries in table
 
 - write tests when more advanced  
