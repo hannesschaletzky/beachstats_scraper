@@ -1,6 +1,6 @@
 import 'dotenv/config'
 import { setupExpressServer } from './server/server'
-import PSQLClient from './db/client'
+import pool from './db/pool'
 import { getParticipationsAndTeamFor } from './scraper/scraper'
 import { writeParticipations, writeTeam } from './db/queries'
 
@@ -11,9 +11,10 @@ setupExpressServer().then((server) => {
   server.listen(port, () => {
     console.log(`Server running on ${hostname}:${port}/`)
   })
-})
 
-PSQLClient()
+  // check pg pooling
+  pool
+})
 
 getParticipationsAndTeamFor(51076).then((result) => {
   writeTeam(result[0])

@@ -1,27 +1,41 @@
 import { Participation, Team } from '../shared/types'
-import PSQLClient from './client'
+import Pool from './pool'
 
 export async function writeParticipations(participations: Participation[]) {
-  const client = await PSQLClient()
   participations.forEach(async (part) => {
-    const result = await client.query(
-      `INSERT INTO "Participations" 
+    executeInsert(
+      `INSERT INTO "Participations"
+      ("Team_id", "Tournament_id") 
         VALUES (
-          ${part.teamID},
-          ${part.tournamentID});`
+          $1,
+          $2)`,
+      [part.teamID, part.tournamentID]
     )
-    console.log(result.status)
   })
 }
 
 export async function writeTeam(team: Team) {
-  const client = await PSQLClient()
-  const result = await client.query(
-    `INSERT INTO "Teams" 
+  executeInsert(
+    `INSERT INTO "Teams"
         VALUES (
-          ${team.teamID},
-          ${team.Player_1_ID},
-          ${team.Player_2_ID});`
+          $1,
+          $2,
+          $3)`,
+    [team.teamID, team.Player_1_ID, team.Player_2_ID]
   )
-  console.log(result.status)
+}
+
+function executeInsert(query: string, values: any) {
+  Pool.connect().then((client) => {
+    client
+      .query(query, values)
+      .then((res) => {
+        client.release()
+        console.log(res.command)
+      })
+      .catch((err) => {
+        client.release()
+        console.log(err.stack)
+      })
+  })
 }

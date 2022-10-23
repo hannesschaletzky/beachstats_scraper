@@ -1,5 +1,5 @@
 import express from 'express'
-import PSQLClient from '../db/client'
+import PSQLClient from '../db/pool'
 
 export const setupExpressServer = () => {
   return new Promise<express.Express>((resolve) => {
@@ -16,10 +16,10 @@ export const setupExpressServer = () => {
     //   res.json(result.rows)
     // })
 
-    app.get('/players', async (req, res) => {
-      const client = await PSQLClient()
-      const result = await client.query('SELECT * FROM "Results";')
-      res.json(result.rows)
+    app.get('/part', async (req, res) => {
+      // const client = await PSQLClient()
+      // const result = await client.query('SELECT * FROM "Participations";')
+      // res.json(result.rows)
     })
 
     resolve(app)
