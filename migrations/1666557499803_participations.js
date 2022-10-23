@@ -2,7 +2,8 @@
 
 exports.up = (pgm) => {
   pgm.createTable('Participations', {
-    Team_id: { type: 'integer', notNull: true, primaryKey: true },
+    id: { type: 'serial', primaryKey: true },
+    Team_id: { type: 'integer', notNull: true },
     Tournament_id: { type: 'integer', notNull: true },
     createdAt: {
       type: 'timestamp',
