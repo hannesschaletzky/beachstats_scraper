@@ -1,4 +1,4 @@
-import type { Config } from '@jest/types';
+import type { Config } from '@jest/types'
 
 // Sync object
 const config: Config.InitialOptions = {
@@ -6,5 +6,5 @@ const config: Config.InitialOptions = {
   transform: {
     '^.+\\.(ts|tsx)$': 'ts-jest'
   }
-};
-export default config;
+}
+export default config
