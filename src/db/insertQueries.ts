@@ -1,7 +1,19 @@
-import { Participation, Team } from '../shared/types'
-import Pool from './pool'
+import { Participation, Player, Team } from '../shared/types'
+import Pool from './connectionPool'
 
-export async function writeParticipations(participations: Participation[]) {
+export async function insertPlayer(player: Player) {
+  executeInsert(
+    `INSERT INTO "Players"
+        VALUES (
+          $1,
+          $2,
+          $3,
+          $4)`,
+    [player.playerID, player.firstName, player.lastName, player.club]
+  )
+}
+
+export async function insertParticipations(participations: Participation[]) {
   participations.forEach(async (part) => {
     executeInsert(
       `INSERT INTO "Participations"
@@ -14,7 +26,7 @@ export async function writeParticipations(participations: Participation[]) {
   })
 }
 
-export async function writeTeam(team: Team) {
+export async function insertTeam(team: Team) {
   executeInsert(
     `INSERT INTO "Teams"
         VALUES (
@@ -25,7 +37,7 @@ export async function writeTeam(team: Team) {
   )
 }
 
-function executeInsert(query: string, values: any) {
+function executeInsert(query: string, values: (string | number)[]) {
   Pool.connect().then((client) => {
     client
       .query(query, values)
@@ -35,7 +47,7 @@ function executeInsert(query: string, values: any) {
       })
       .catch((err) => {
         client.release()
-        console.log(err.stack)
+        console.error(err.stack)
       })
   })
 }
