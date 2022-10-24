@@ -12,7 +12,11 @@ exports.up = (pgm) => {
     }
   })
 
-  pgm.addConstraint('Participations', 'ForeignKey', {
+  pgm.addConstraint('Participations', 'ForeignKey Team_id', {
     foreignKeys: { columns: 'Team_id', references: 'Teams' }
+  })
+
+  pgm.addConstraint('Participations', 'Unique Participation', {
+    unique: ['Team_id', 'Tournament_id']
   })
 }
