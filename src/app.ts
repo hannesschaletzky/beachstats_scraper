@@ -1,11 +1,11 @@
 import 'dotenv/config'
 import { setupExpressServer } from './server/server'
-import { getParticipationsAndTeamById, getPlayerById } from './scraper/scraper'
-import {
-  insertParticipations,
-  insertPlayer,
-  insertTeam
-} from './db/insertQueries'
+import { fetchHTML } from './scraper/scraper'
+import { extractPlayer } from './modules/extractPlayer'
+import { DB } from './db/queries'
+import { ScrapingURLs } from './shared'
+import { extractTeam } from './modules/extractTeam'
+import { extractParticipations } from './modules/extractParticipations'
 
 const hostname = process.env.HOSTNAME
 const port = process.env.PORT
@@ -16,14 +16,24 @@ setupExpressServer().then((server) => {
   })
 })
 
-getPlayerById(60060).then((player) => {
-  insertPlayer(player)
-})
-getPlayerById(63301).then((player) => {
-  insertPlayer(player)
+// player
+const playerID = 60060
+const playerURL = ScrapingURLs.Player(playerID)
+fetchHTML(playerURL).then((document) => {
+  const player = extractPlayer(document, playerID)
+  console.log(player)
+  DB.insert.player(player)
 })
 
-getParticipationsAndTeamById(51076).then((result) => {
-  insertTeam(result[0])
-  insertParticipations(result[1])
+// team & participations
+const teamID = 51076
+const teamURL = ScrapingURLs.Team(teamID)
+fetchHTML(teamURL).then((document) => {
+  const team = extractTeam(document, teamID)
+  console.log(team)
+  DB.insert.team(team)
+
+  const participations = extractParticipations(document, teamID)
+  console.log(participations)
+  DB.insert.participations(participations)
 })
