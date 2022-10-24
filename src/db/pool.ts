@@ -8,7 +8,6 @@ pool.on('error', (err) => {
   process.exit(-1)
 })
 
-// you can also use async/await
 pool.query('SELECT NOW()').then((res) => {
   console.log(res.rows[0])
 })
