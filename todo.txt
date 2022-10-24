@@ -1,9 +1,10 @@
-- add foreign key in tables
-- scrape players
 - scrape tournament results 
 - scrape tournament infos 
 - execute for 5000 teams 
 - execute for 5000 players 
-- forbid double entries in table
 
 - write tests when more advanced  
+
+- setup VPS server 
+- setup database on VPS
+- setup pipeline

@@ -1,6 +1,5 @@
 import 'dotenv/config'
 import { setupExpressServer } from './server/server'
-import pool from './db/connectionPool'
 import { getParticipationsAndTeamById, getPlayerById } from './scraper/scraper'
 import {
   insertParticipations,
