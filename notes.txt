@@ -1,1 +1,16 @@
 after 450 player requests, the server crashed. 
+
+FetchError: request to https://beach.volleyball-verband.de/public/spieler.php?id=104 failed, reason: read ECONNRESET
+    at ClientRequest.<anonymous> (/Users/hannesschaletzky/repos/1_private/beachStats/node_modules/node-fetch/lib/index.js:1491:11)
+    at ClientRequest.emit (node:events:513:28)
+    at ClientRequest.emit (node:domain:489:12)
+    at TLSSocket.socketErrorListener (node:_http_client:494:9)
+    at TLSSocket.emit (node:events:513:28)
+    at TLSSocket.emit (node:domain:489:12)
+    at emitErrorNT (node:internal/streams/destroy:151:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:116:3)
+    at processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  type: 'system',
+  errno: 'ECONNRESET',
+  code: 'ECONNRESET'
+}
