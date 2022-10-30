@@ -5,12 +5,10 @@ on: [push]
 jobs:
   push-to-vps:
     runs-on: ubuntu-latest
-
     - name: Load private SSH key
       uses: webfactory/ssh-agent@v0.5.3
       with:
-        ssh-private-key: ${{ secrets. secrets.SSHKEY }}
-
+        ssh-private-key: ${{ secrets.SSHKEY }}
     - name: Atomic Deploy
       run: |
         ssh ${{ secrets.USERNAME }}@${{ secrets.HOST }} << EOF
