@@ -1,0 +1,9 @@
+name: Deploy
+on: [push]
+jobs:
+  testRunner:
+    runs-on: ubuntu-latest
+    steps:
+      - name: execute
+        run: |
+          whoami
