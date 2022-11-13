@@ -7,3 +7,4 @@ jobs:
       - name: execute
         run: |
           whoami
+          ll
