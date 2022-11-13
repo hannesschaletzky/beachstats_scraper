@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Executing remote command
+      - name: execute
         uses: appleboy/ssh-action@master
         with:
           HOST: ${{ secrets.HOST }}
