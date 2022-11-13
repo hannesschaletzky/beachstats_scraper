@@ -7,4 +7,5 @@ jobs:
       - name: execute
         run: |
           whoami
-          ll
+          ls
+          echo "hello world!"
