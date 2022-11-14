@@ -1,0 +1,29 @@
+name: CI
+on: [push]
+jobs:
+  deploy:
+    name: 'Deploy to vps'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/droplet.key
+          chmod 600 ~/.ssh/droplet.key
+          cat >>~/.ssh/config <<END
+          Host droplet
+            HostName $SSH_HOST
+            User root
+            IdentityFile ~/.ssh/droplet.key
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_USER: root
+          SSH_KEY: ${{ secrets.SSHKEY }}
+          SSH_HOST: ${{ secrets.HOST }}
+
+      - name: print root
+        run: ssh droplet 'whoami'
+
+      - name: print pwd
+        run: ssh droplet 'pwd'
