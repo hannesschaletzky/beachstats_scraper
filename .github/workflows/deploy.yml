@@ -11,6 +11,7 @@ jobs:
           USERNAME: root
           PORT: 22
           KEY: ${{ secrets.SSHKEY }}
+          script_stop: true # stops on script failure
           script: |
             whoami
             ls -al
