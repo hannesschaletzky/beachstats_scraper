@@ -27,9 +27,3 @@ jobs:
 
       - name: print pwd
         run: ssh droplet 'pwd'
-
-      - name: multiline stuff
-        run: ssh droplet "\
-          ls && \
-          pwd && \
-          whoami"
