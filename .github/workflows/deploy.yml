@@ -29,8 +29,7 @@ jobs:
         run: ssh droplet 'pwd'
 
       - name: multiline stuff
-        run: ssh droplet | '
-        ls && 
-        pwd &&
-        whoami
-        '
+        run: ssh droplet "\
+          ls && \
+          pwd && \
+          whoami"
