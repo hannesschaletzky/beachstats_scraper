@@ -27,3 +27,6 @@ jobs:
 
       - name: print pwd
         run: ssh droplet 'pwd'
+
+      - name: update repo
+        run: ssh droplet 'cd repos/beachStats && git pull'

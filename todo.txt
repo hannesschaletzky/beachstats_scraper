@@ -5,6 +5,5 @@
 
 - write tests when more advanced  
 
-- setup VPS server 
 - setup database on VPS
 - setup pipeline
