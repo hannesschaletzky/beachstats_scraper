@@ -1,3 +1,4 @@
+# https://github.com/appleboy/ssh-action#setting-up-ssh-key
 name: Deploy
 on: [push]
 jobs:
@@ -5,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: execute
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@dce9d565de8d876c11d93fa4fe677c0285a66d78
         with:
           HOST: ${{ secrets.HOST }}
           USERNAME: root
