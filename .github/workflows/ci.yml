@@ -1,8 +1,9 @@
+# https://blog.benoitblanchon.fr/github-action-run-ssh-commands/
 name: CI
 on: [push]
 jobs:
   deploy:
-    name: 'Deploy to vps'
+    name: 'Droplet Deploy'
     runs-on: ubuntu-latest
     steps:
       - name: Configure SSH
@@ -18,7 +19,6 @@ jobs:
             StrictHostKeyChecking no
           END
         env:
-          SSH_USER: root
           SSH_KEY: ${{ secrets.SSHKEY }}
           SSH_HOST: ${{ secrets.HOST }}
 
@@ -27,3 +27,6 @@ jobs:
 
       - name: print pwd
         run: ssh droplet 'pwd'
+
+      - name: print things
+        run: ssh droplet 'll'

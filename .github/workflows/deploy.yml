@@ -1,17 +1,17 @@
-# https://github.com/appleboy/ssh-action#setting-up-ssh-key
-name: Deploy
-on: [push]
-jobs:
-  push-to-vps:
-    runs-on: ubuntu-latest
-    steps:
-      - name: execute
-        uses: appleboy/ssh-action@1d1b21ca96111b1eb4c03c21c14ebb971d2200f6
-        with:
-          HOST: ${{ secrets.HOST }}
-          USERNAME: root
-          PORT: 22
-          KEY: ${{ secrets.SSHKEY }}
-          script: |
-            whoami
-            ls -al
+# # https://github.com/appleboy/ssh-action#setting-up-ssh-key
+# name: Deploy
+# on: [push]
+# jobs:
+#   push-to-vps:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: execute
+#         uses: appleboy/ssh-action@1d1b21ca96111b1eb4c03c21c14ebb971d2200f6
+#         with:
+#           HOST: ${{ secrets.HOST }}
+#           USERNAME: root
+#           PORT: 22
+#           KEY: ${{ secrets.SSHKEY }}
+#           script: |
+#             whoami
+#             ls -al
