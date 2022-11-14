@@ -11,4 +11,6 @@ jobs:
           USERNAME: root
           PORT: 22
           KEY: ${{ secrets.SSHKEY }}
-          script: whoami
+          script: |
+            whoami
+            ls -al
