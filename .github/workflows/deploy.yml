@@ -29,4 +29,10 @@ jobs:
         run: ssh droplet 'pwd'
 
       - name: update repo
-        run: ssh droplet 'cd ../repos/beachStats/ && git pull && npm install'
+        run: ssh droplet 'cd /repos/beachStats/ && git pull && npm install'
+
+      - name: build repo
+        run: ssh droplet 'cd /repos/beachStats/ && npm run build'
+
+      - name: copy .env
+        run: ssh droplet 'cd /repos/beachStats/ && cp /repos/beachStats/.env /repos/beachStats/build/'
