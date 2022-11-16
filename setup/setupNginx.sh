@@ -9,6 +9,7 @@ sudo ufw app list
 
 # allo http traffic AND ssh connections
 sudo ufw allow 'Nginx HTTP'
+sudo ufw allow 'Nginx HTTPS'
 sudo ufw allow 'OpenSSH'
 
 # check ufw status
@@ -26,13 +27,24 @@ sudo ufw status
 #
 # To                         Action      From
 # --                         ------      ----
-# Nginx HTTP                 ALLOW       Anywhere                  
 # OpenSSH                    ALLOW       Anywhere                  
+# OpenSSH (v6)               ALLOW       Anywhere (v6)             
+# Nginx HTTP                 ALLOW       Anywhere                  
+# Nginx HTTPS                ALLOW       Anywhere                  
 # Nginx HTTP (v6)            ALLOW       Anywhere (v6)             
-# OpenSSH (v6)               ALLOW       Anywhere (v6)  
+# Nginx HTTPS (v6)           ALLOW       Anywhere (v6)    
 
 # check nginx web server -> should be already active
 systemctl status nginx
 
 # visit page http://167.99.135.251/ 
 # -> see nginx default page
+
+# enable nginx to startup when system boots
+sudo systemctl enable nginx
+
+# test nginx files for syntax errors
+sudo nginx -t
+
+# restart nginx 
+sudo systemctl restart nginx
