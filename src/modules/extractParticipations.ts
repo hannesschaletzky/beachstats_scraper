@@ -1,4 +1,4 @@
-import { Participation } from 'shared'
+import { Participation } from '../shared'
 
 // team.php?id=41626 -> 41626
 function extractNumber(str: string): number {

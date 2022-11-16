@@ -1,4 +1,4 @@
-import { Participation, Player, Team } from 'shared'
+import { Participation, Player, Team } from '../shared'
 import Pool from './pool'
 
 function executeInsert(query: string, values: (string | number)[]) {

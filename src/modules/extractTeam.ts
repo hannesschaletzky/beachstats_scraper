@@ -1,4 +1,4 @@
-import { Team } from 'shared'
+import { Team } from '../shared'
 
 export function extractTeam(document: Document, teamID: number): Team {
   const tables: HTMLTableElement[] = Array.from(
