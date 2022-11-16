@@ -32,7 +32,7 @@ jobs:
         run: ssh droplet 'cd /repos/beachStats/ && npm run build'
 
       - name: copy .env
-        run: ssh droplet 'cd /repos/beachStats/ && cp /repos/beachStats/.env /repos/beachStats/build/'
+        run: ssh droplet 'cd /repos/beachStats/ && cp /repos/beachStats/.env /repos/beachStats/build/ && pm2 list'
 
       - name: update process
         run: ssh droplet 'pm2 list && pm2 reload beachstats'
