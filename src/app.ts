@@ -1,11 +1,11 @@
 import 'dotenv/config'
-import { setupExpressServer } from './server/server'
-import { fetchHTML } from './scraper/scraper'
-import { extractPlayer } from './modules/extractPlayer'
-import { DB } from './db/queries'
-import { ScrapingURLs } from './shared'
-import { extractTeam } from './modules/extractTeam'
-import { extractParticipations } from './modules/extractParticipations'
+import { setupExpressServer } from 'server/server'
+import { fetchHTML } from 'scraper/scraper'
+import { extractPlayer } from 'modules/extractPlayer'
+import { DB } from 'db/queries'
+import { ScrapingURLs } from 'shared'
+import { extractTeam } from 'modules/extractTeam'
+import { extractParticipations } from 'modules/extractParticipations'
 
 import { JSDOM } from 'jsdom'
 
