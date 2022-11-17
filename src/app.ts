@@ -15,9 +15,9 @@ import fs from 'fs'
 import { doc } from 'prettier'
 const fsPromises = fs.promises
 
-cron.schedule('*/1 * * * * *', () => {
-  console.log('every second')
-})
+// cron.schedule('*/1 * * * * *', () => {
+//   console.log('every second')
+// })
 
 // async function doReadFile() {
 //   try {
