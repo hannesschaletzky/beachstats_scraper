@@ -2,9 +2,9 @@
 
 exports.up = (pgm) => {
   pgm.createTable('Participations', {
-    id: { type: 'serial', primaryKey: true },
-    Team_id: { type: 'integer', notNull: true },
-    Tournament_id: { type: 'integer', notNull: true },
+    ID: { type: 'serial', primaryKey: true },
+    Team_DVV_ID: { type: 'integer', notNull: true },
+    Tournament_DVV_ID: { type: 'integer', notNull: true },
     createdAt: {
       type: 'timestamp',
       notNull: true,
@@ -12,11 +12,11 @@ exports.up = (pgm) => {
     }
   })
 
-  pgm.addConstraint('Participations', 'ForeignKey Team_id', {
-    foreignKeys: { columns: 'Team_id', references: 'Teams' }
+  pgm.addConstraint('Participations', 'ForeignKey Team_DVV_ID', {
+    foreignKeys: { columns: 'Team_DVV_ID', references: 'Teams' }
   })
 
   pgm.addConstraint('Participations', 'Unique Participation', {
-    unique: ['Team_id', 'Tournament_id']
+    unique: ['Team_DVV_ID', 'Tournament_DVV_ID']
   })
 }

@@ -1,4 +1,4 @@
-import { Player } from '../shared'
+import { Player } from '../../shared'
 
 // const url = `${process.env.BEACH_URL}/spieler.php?id=${playerID}`
 

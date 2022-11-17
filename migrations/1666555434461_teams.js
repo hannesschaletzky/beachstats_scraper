@@ -2,9 +2,9 @@
 
 exports.up = (pgm) => {
   pgm.createTable('Teams', {
-    Team_id: { type: 'integer', notNull: true, primaryKey: true },
-    Player_1_id: { type: 'integer', notNull: true },
-    Player_2_id: { type: 'integer', notNull: true },
+    DVV_ID: { type: 'integer', notNull: true, primaryKey: true },
+    Player_1_DVV_ID: { type: 'integer', notNull: true },
+    Player_2_DVV_ID: { type: 'integer', notNull: true },
     createdAt: {
       type: 'timestamp',
       notNull: true,

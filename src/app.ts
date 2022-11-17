@@ -1,24 +1,17 @@
 import 'dotenv/config'
 import { setupExpressServer } from './server/server'
-import { fetchHTML } from './scraper/scraper'
-import { extractPlayer } from './modules/extractPlayer'
-import { DB } from './db/queries'
-import { ScrapingURLs } from './shared'
-import { extractTeam } from './modules/extractTeam'
-import { extractParticipations } from './modules/extractParticipations'
+import { CronController } from 'modules/cronController'
 
+import { fetchHTML } from './scraper/scraper'
+import { extractPlayer } from './modules/extract/extractPlayer'
+import { DB } from './db/queries'
+import { ScrapingURLs, Tables } from './shared'
+import { extractTeam } from './modules/extract/extractTeam'
+import { extractParticipations } from './modules/extract/extractParticipations'
 import { JSDOM } from 'jsdom'
 
-import cron from 'node-cron'
-
-import fs from 'fs'
-import { doc } from 'prettier'
-const fsPromises = fs.promises
-
-// cron.schedule('*/1 * * * * *', () => {
-//   console.log('every second')
-// })
-
+// import fs from 'fs'
+// const fsPromises = fs.promises
 // async function doReadFile() {
 //   try {
 //     // Using the filehandle method
@@ -52,33 +45,4 @@ setupExpressServer().then((server) => {
   })
 })
 
-// player
-// const playerID = 60060
-// const playerURL = ScrapingURLs.Player(playerID)
-// fetchHTML(playerURL).then((document) => {
-//   const player = extractPlayer(document, playerID)
-//   console.log(player)
-//   DB.insert.player(player)
-// })
-
-// for (let i = 0; i <= 1; i++) {
-//   const playerURL = ScrapingURLs.Player(i)
-//   fetchHTML(playerURL).then((document) => {
-//     const player = extractPlayer(document, i)
-//     console.log(player)
-//     DB.insert.player(player)
-//   })
-// }
-
-// team & participations
-// const teamID = 51076
-// const teamURL = ScrapingURLs.Team(teamID)
-// fetchHTML(teamURL).then((document) => {
-//   const team = extractTeam(document, teamID)
-//   console.log(team)
-//   DB.insert.team(team)
-
-//   const participations = extractParticipations(document, teamID)
-//   console.log(participations)
-//   DB.insert.participations(participations)
-// })
+// CronController.startPlayers()

@@ -1,4 +1,6 @@
-import { Participation, Player, Team } from '../shared'
+import { rejects } from 'assert'
+import { isMissingDeclaration } from 'typescript'
+import { Participation, Player, Team, Tables } from '../shared'
 import Pool from './pool'
 
 function executeInsert(query: string, values: (string | number)[]) {
@@ -33,7 +35,7 @@ export class DB {
       participations.forEach(async (part) => {
         executeInsert(
           `INSERT INTO "Participations"
-          ("Team_id", "Tournament_id") 
+          ("Team_DVV_ID", "Tournament_DVV_ID") 
             VALUES (
               $1,
               $2)`,
@@ -50,6 +52,50 @@ export class DB {
           $3)`,
         [team.teamID, team.Player_1_ID, team.Player_2_ID]
       )
+    }
+  }
+  static ID = {
+    max(table: Tables): Promise<number> {
+      return new Promise<number>((resolve, reject) => {
+        Pool.connect().then((client) => {
+          client
+            .query(`SELECT MAX("DVV_ID") FROM public."${table}"`)
+            .then((res) => {
+              client.release()
+              let id = res.rows[0].max
+              console.log(`${table} max id: ${id}`)
+              if (id == null) {
+                console.log('starting at 1')
+                id = 1
+              }
+              resolve(id)
+            })
+            .catch((err) => {
+              client.release()
+              console.error(err.stack)
+              reject(-1)
+            })
+        })
+      })
+    },
+    missing(table: Tables) {
+      Pool.connect().then((client) => {
+        client
+          .query(
+            ` SELECT all_ids AS missing_ids
+              FROM generate_series((SELECT MIN("DVV_ID") FROM public."${table}"), (SELECT MAX("DVV_ID") FROM public."${table}")) all_ids
+              EXCEPT 
+              SELECT "DVV_ID" FROM public."${table}" ORDER BY "missing_ids"`
+          )
+          .then((res) => {
+            client.release()
+            console.log('missing ids:' + res.rows)
+          })
+          .catch((err) => {
+            client.release()
+            console.error(err.stack)
+          })
+      })
     }
   }
 }

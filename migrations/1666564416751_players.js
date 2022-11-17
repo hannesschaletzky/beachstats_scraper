@@ -2,7 +2,7 @@
 
 exports.up = (pgm) => {
   pgm.createTable('Players', {
-    Player_id: { type: 'integer', primaryKey: true },
+    DVV_ID: { type: 'integer', primaryKey: true },
     First_Name: { type: 'varchar(100)', notNull: true },
     Last_Name: { type: 'varchar(100)', notNull: true },
     Club: { type: 'varchar(100)' },

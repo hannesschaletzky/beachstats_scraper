@@ -17,6 +17,15 @@ export interface Player {
 }
 
 /**
+ * Database Table names
+ */
+export enum Tables {
+  Players = 'Players',
+  Teams = 'Teams',
+  Participations = 'Participations'
+}
+
+/**
  * Holds constructed URLs of scraping scenarios
  */
 export class ScrapingURLs {
