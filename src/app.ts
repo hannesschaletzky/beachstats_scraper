@@ -9,9 +9,15 @@ import { extractParticipations } from './modules/extractParticipations'
 
 import { JSDOM } from 'jsdom'
 
+import cron from 'node-cron'
+
 import fs from 'fs'
 import { doc } from 'prettier'
 const fsPromises = fs.promises
+
+cron.schedule('*/1 * * * * *', () => {
+  console.log('every second')
+})
 
 // async function doReadFile() {
 //   try {
