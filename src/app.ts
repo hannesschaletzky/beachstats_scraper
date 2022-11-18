@@ -11,4 +11,4 @@ setupExpressServer().then((server) => {
   })
 })
 
-CronController.startPlayers()
+// CronController.startPlayers()
