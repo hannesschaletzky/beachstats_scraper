@@ -10,6 +10,10 @@ import { extractTeam } from './modules/extract/extractTeam'
 import { extractParticipations } from './modules/extract/extractParticipations'
 import { JSDOM } from 'jsdom'
 
+import { crawler } from 'scraper/crawlee'
+
+// import main from './scraper/crawlee'
+
 // import fs from 'fs'
 // const fsPromises = fs.promises
 // async function doReadFile() {
@@ -45,4 +49,9 @@ setupExpressServer().then((server) => {
   })
 })
 
+// main()
+
 // CronController.startPlayers()
+
+// Add first URL to the queue and start the crawl.
+crawler.run(['https://crawlee.dev'])
