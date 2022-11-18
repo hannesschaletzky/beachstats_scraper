@@ -1,8 +1,11 @@
-import { fetchHTML } from '../scraper/scraper'
+// https://github.com/node-cron/node-cron
+
 import { extractPlayer } from './extract/extractPlayer'
 import { DB } from '../db/queries'
-import { ScrapingURLs, Tables } from '../shared'
+import { DvvURLs, Tables } from '../shared'
 import cron from 'node-cron'
+import { scrapeBody } from 'scraper/got-scraping'
+import { JSDOM } from 'jsdom'
 
 /**
  * Handles the cron job scraping logic
@@ -10,31 +13,26 @@ import cron from 'node-cron'
 export class CronController {
   static async startPlayers() {
     let playerID = await DB.ID.max(Tables.Players)
-    cron.schedule('*/2 * * * * *', () => {
-      executePlayerFlow(playerID)
+    const job = cron.schedule('*/2 * * * * *', () => {
+      scrapeAndSavePlayer(playerID)
+      console.log(playerID)
       playerID++
+      if (playerID == 30) {
+        //TODO: DOES NOT WORK!
+        job.stop()
+      }
     })
   }
 }
 
 // player
-const executePlayerFlow = (playerID: number) => {
-  const playerURL = ScrapingURLs.Player(playerID)
-  fetchHTML(playerURL).then((document: Document) => {
-    const player = extractPlayer(document, playerID)
-    // console.log(player)
-    DB.insert.player(player)
-  })
+const scrapeAndSavePlayer = async (playerID: number) => {
+  const url = DvvURLs.Player(playerID)
+  const body = await scrapeBody(url)
+  const document = new JSDOM(body).window.document
+  const player = extractPlayer(document, playerID)
+  DB.insert.player(player)
 }
-
-// for (let i = 0; i <= 1; i++) {
-//   const playerURL = ScrapingURLs.Player(i)
-//   fetchHTML(playerURL).then((document) => {
-//     const player = extractPlayer(document, i)
-//     console.log(player)
-//     DB.insert.player(player)
-//   })
-// }
 
 // team & participations
 // const teamID = 51076

@@ -28,7 +28,7 @@ export enum Tables {
 /**
  * Holds constructed URLs of scraping scenarios
  */
-export class ScrapingURLs {
+export class DvvURLs {
   private static base = process.env.BEACH_URL
 
   /**
@@ -37,10 +37,10 @@ export class ScrapingURLs {
    * @id number
    */
   static Player(id: number) {
-    return `${ScrapingURLs.base}/spieler.php?id=${id}`
+    return `${DvvURLs.base}/spieler.php?id=${id}`
   }
 
   static Team(id: number) {
-    return `${ScrapingURLs.base}/team.php?id=${id}`
+    return `${DvvURLs.base}/team.php?id=${id}`
   }
 }
