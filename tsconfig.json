@@ -7,7 +7,7 @@
     "paths": {
       "c": ["/controllers"] // This mapping is relative to "baseUrl"
     },
-    "target": "es5",
+    "target": "es6",
     "module": "commonjs",
     "lib": ["es6"],
     "allowJs": true,
