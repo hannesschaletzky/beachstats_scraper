@@ -1,6 +1,4 @@
-import { rejects } from 'assert'
-import { isMissingDeclaration } from 'typescript'
-import { Participation, Player, Team, Tables } from '../shared'
+import { Player, Team, Tables } from '../shared'
 import Pool from './pool'
 
 function executeInsert(query: string, values: (string | number)[]) {
@@ -28,21 +26,21 @@ export class DB {
           $2,
           $3,
           $4)`,
-        [player.DVV_ID, player.firstName, player.lastName, player.club]
+        [player.DVV_ID, player.First_Name, player.Last_Name, player.Club]
       )
     },
-    participations(participations: Participation[]) {
-      participations.forEach(async (part) => {
-        executeInsert(
-          `INSERT INTO "Participations"
-          ("Team_DVV_ID", "Tournament_DVV_ID") 
-            VALUES (
-              $1,
-              $2)`,
-          [part.teamID, part.tournamentID]
-        )
-      })
-    },
+    // participations(participations: Participation[]) {
+    //   participations.forEach(async (part) => {
+    //     executeInsert(
+    //       `INSERT INTO "Participations"
+    //       ("Team_DVV_ID", "Tournament_DVV_ID")
+    //         VALUES (
+    //           $1,
+    //           $2)`,
+    //       [part.teamID, part.tournamentID]
+    //     )
+    //   })
+    // },
     team(team: Team) {
       executeInsert(
         `INSERT INTO "Teams"

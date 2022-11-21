@@ -1,8 +1,10 @@
 import { JSDOM } from 'jsdom'
 
-export interface Participation {
-  teamID: number
-  tournamentID: number
+export interface Tour_Result {
+  DVV_ID: number
+  Place: number
+  Team_DVV_ID: number
+  Points: number
 }
 
 export interface Team {
@@ -13,9 +15,9 @@ export interface Team {
 
 export interface Player {
   DVV_ID: number
-  firstName: string
-  lastName: string
-  club: string
+  First_Name: string
+  Last_Name: string
+  Club: string
 }
 
 /**
