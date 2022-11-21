@@ -34,8 +34,8 @@ jobs:
       - name: copy .env
         run: ssh droplet 'cd /repos/beachStats/ && cp /repos/beachStats/.env /repos/beachStats/build/'
 
-      - name: update process
-        run: ssh droplet 'source ~/.nvm/nvm.sh && pm2 list && pm2 reload beachstats --update-env'
+      - name: reload pm2 process
+        run: ssh droplet 'source ~/.nvm/nvm.sh && cd /repos/beachStats/ && pm2 reload pm2/prod.config.js'
 
-      - name: check server running
+      - name: check success
         run: ssh droplet 'curl 127.0.0.1:3100'
