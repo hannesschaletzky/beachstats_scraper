@@ -4,7 +4,7 @@ import { extractPlayer } from './extract/extractPlayer'
 import { DB } from '../db/queries'
 import { createDocumentFromBody, DvvURLs, Tables } from '../shared'
 import cron from 'node-cron'
-import { scrapeBody } from 'scraper/got-scraping'
+import { scrapeBody } from '../scraper/got-scraping'
 
 /**
  * Handles the cron job scraping logic

@@ -7,8 +7,8 @@ export interface Participation {
 
 export interface Team {
   DVV_ID: number
-  Player_1_ID: number
-  Player_2_ID: number
+  Player_1_DVV_ID: number
+  Player_2_DVV_ID: number
 }
 
 export interface Player {

@@ -11,8 +11,8 @@ export function extractTeam(document: Document, teamID: number): Team {
   // extract player IDs and save as team
   const team: Team = {
     DVV_ID: teamID,
-    Player_1_ID: -1,
-    Player_2_ID: -1
+    Player_1_DVV_ID: -1,
+    Player_2_DVV_ID: -1
   }
   const row = tables[2]?.firstChild?.childNodes[3]
   const playerOneID = Number(row?.childNodes[1]?.textContent)
@@ -21,8 +21,8 @@ export function extractTeam(document: Document, teamID: number): Team {
     console.log(`team ${teamID} did not consist of two players`)
     return team
   }
-  team.Player_1_ID = playerOneID
-  team.Player_2_ID = playerTwoID
+  team.Player_1_DVV_ID = playerOneID
+  team.Player_2_DVV_ID = playerTwoID
 
   return team
 }

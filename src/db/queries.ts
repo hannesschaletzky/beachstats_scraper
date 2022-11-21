@@ -28,7 +28,7 @@ export class DB {
           $2,
           $3,
           $4)`,
-        [player.playerID, player.firstName, player.lastName, player.club]
+        [player.DVV_ID, player.firstName, player.lastName, player.club]
       )
     },
     participations(participations: Participation[]) {
@@ -50,7 +50,7 @@ export class DB {
           $1,
           $2,
           $3)`,
-        [team.teamID, team.Player_1_ID, team.Player_2_ID]
+        [team.DVV_ID, team.Player_1_DVV_ID, team.Player_2_DVV_ID]
       )
     }
   }

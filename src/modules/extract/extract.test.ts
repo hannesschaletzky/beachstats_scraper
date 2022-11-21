@@ -51,10 +51,10 @@ describe('extractTeam should return a correct team object', () => {
   })
 
   test('Player_1_ID set', () => {
-    expect(team.Player_1_ID).toBe(55957)
+    expect(team.Player_1_DVV_ID).toBe(55957)
   })
 
   test('Player_2_ID set', () => {
-    expect(team.Player_2_ID).toBe(4846)
+    expect(team.Player_2_DVV_ID).toBe(4846)
   })
 })
