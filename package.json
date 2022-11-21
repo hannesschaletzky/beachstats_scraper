@@ -2,6 +2,9 @@
   "name": "beachstats",
   "version": "1.0.0",
   "description": "Beach Volleyball Statistics Scraper / Backend",
+  "engines": {
+    "node": ">=14.16"
+  },
   "scripts": {
     "dev": "nodemon",
     "lint": "eslint . --ext .ts",
@@ -9,35 +12,32 @@
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
     "test": "jest --config",
     "migrate": "node-pg-migrate",
-    "build": "rimraf ./build && tsc",
-    "start": "npm run build && NODE_OPTIONS='-r ts-node/register -r tsconfig-paths/register' node build/app.js"
+    "build": "rimraf ./build && tsc"
   },
   "keywords": [],
   "author": "Hannes Schaletzky",
   "license": "MIT",
   "dependencies": {
     "@types/express": "^4.17.13",
-    "@types/jest": "^27.4.0",
+    "@types/jest": "^29.2.3",
     "@types/jsdom": "^20.0.0",
-    "@types/node": "^17.0.16",
+    "@types/node": "^18.11.9",
     "@types/node-cron": "^3.0.6",
-    "@types/node-fetch": "^2.6.2",
     "@types/supertest": "^2.0.11",
     "dotenv": "^16.0.0",
     "express": "^4.17.2",
     "got-scraping": "^3.2.12",
-    "jest": "^27.5.1",
+    "jest": "^29.3.1",
     "jsdom": "^20.0.1",
     "node-cron": "^3.0.2",
-    "node-fetch": "^2.6.7",
     "node-pg-migrate": "^6.2.2",
     "pg": "^8.8.0",
     "rimraf": "^3.0.2",
     "supertest": "^6.2.2",
-    "ts-jest": "^27.1.3",
-    "ts-node": "^10.5.0",
+    "ts-jest": "^29.0.3",
+    "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.0",
-    "typescript": "^4.5.5"
+    "typescript": "^4.9.3"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.11.0",

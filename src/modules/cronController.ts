@@ -6,7 +6,6 @@ import { DB } from 'db/queries'
 import { createDOM, DvvURLs, Tables } from 'shared'
 import { scrapeBody } from 'scraper/got-scraping'
 import { extractTeam } from './extract/extractTeam'
-import { scrapeBodyOnlyGot } from 'scraper/got'
 
 /*
   Stopping jobs might be better done with a cron-manager
@@ -46,8 +45,7 @@ export class CronController {
 
 const scrapeAndSavePlayer = async (playerID: number) => {
   const url = DvvURLs.Player(playerID)
-  // const body = await scrapeBody(url)
-  const body = await scrapeBodyOnlyGot(url)
+  const body = await scrapeBody(url)
   const document = createDOM(body)
   const player = extractPlayer(document, playerID)
   DB.insert.player(player)
