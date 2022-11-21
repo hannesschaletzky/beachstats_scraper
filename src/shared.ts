@@ -26,10 +26,10 @@ export interface Player {
 export enum Tables {
   Players = 'Players',
   Teams = 'Teams',
-  Participations = 'Participations'
+  Tour_Result = 'Tour_Result'
 }
 
-export function createDocumentFromBody(body: string) {
+export function createDOM(body: string) {
   return new JSDOM(body).window.document
 }
 

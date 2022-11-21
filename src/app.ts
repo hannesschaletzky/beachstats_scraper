@@ -3,7 +3,8 @@ dotenv.config()
 import { setupExpressServer } from 'server/server'
 import { CronController } from 'modules/cronController'
 import { saveBodyAsFile } from 'scraper/FS'
-import { DvvURLs } from 'shared'
+import { DvvURLs, Tables } from 'shared'
+import { DB } from 'db/queries'
 
 const hostname = process.env.HOSTNAME
 const port = process.env.PORT
@@ -14,7 +15,11 @@ setupExpressServer().then((server) => {
   })
 })
 
-// CronController.startPlayers()
+CronController.startPlayers()
+
+DB.ID.missing(Tables.Players).then((val) => {
+  console.log(val)
+})
 
 // eslint-disable-next-line no-constant-condition
 if (false) {

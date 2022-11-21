@@ -8,8 +8,8 @@ export function scrapeBody(url: string): Promise<string> {
       .get(url)
       .then(({ body }) => resolve(body as string))
       .catch((err) => {
-        console.log(err)
-        reject(err)
+        console.error(err)
+        // reject(err)
       })
   })
 }

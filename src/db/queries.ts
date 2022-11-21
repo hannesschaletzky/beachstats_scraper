@@ -70,29 +70,34 @@ export class DB {
             })
             .catch((err) => {
               client.release()
-              console.error(err.stack)
-              reject(-1)
+              console.error(err)
+              reject(err)
             })
         })
       })
     },
-    missing(table: Tables) {
-      Pool.connect().then((client) => {
-        client
-          .query(
-            ` SELECT all_ids AS missing_ids
-              FROM generate_series((SELECT MIN("DVV_ID") FROM public."${table}"), (SELECT MAX("DVV_ID") FROM public."${table}")) all_ids
+    missing(table: Tables): Promise<number[]> {
+      return new Promise<number[]>((resolve, reject) => {
+        Pool.connect().then((client) => {
+          client
+            .query(
+              ` SELECT all_ids AS missing_ids
+              FROM generate_series(1, (SELECT MAX("DVV_ID") FROM public."${table}")) all_ids
               EXCEPT 
               SELECT "DVV_ID" FROM public."${table}" ORDER BY "missing_ids"`
-          )
-          .then((res) => {
-            client.release()
-            console.log('missing ids:' + res.rows)
-          })
-          .catch((err) => {
-            client.release()
-            console.error(err.stack)
-          })
+            )
+            .then((res) => {
+              client.release()
+              const missing = res.rows.map((a) => a.missing_ids) // extract values
+              console.log(`Table ${table}, missing_ids: ${missing}`)
+              resolve(missing)
+            })
+            .catch((err) => {
+              client.release()
+              console.error(err)
+              reject(err)
+            })
+        })
       })
     }
   }

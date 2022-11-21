@@ -9,7 +9,7 @@ pool.on('error', (err) => {
 })
 
 pool.query('SELECT NOW()').then((res) => {
-  console.log(res.rows[0])
+  console.log(`connected to DB at ${res.rows[0].now}`)
 })
 
 export default pool

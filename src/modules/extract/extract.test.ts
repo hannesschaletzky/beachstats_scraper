@@ -1,24 +1,24 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 import { readContentFromFile } from '../../scraper/FS'
-import { createDocumentFromBody, Player, Team, Tour_Result } from '../../shared'
+import { createDOM, Player, Team, Tour_Result } from '../../shared'
 import { extractPlayer } from './extractPlayer'
 import { extractTeam } from './extractTeam'
 import { extractTourResults } from './extractTourResults'
 
-async function createDocumentFromFile(filename: string) {
+async function createDOMFromFile(filename: string) {
   const body = await readContentFromFile(filename)
   if (body == undefined) {
     throw Error('Body is undefined')
   }
-  return createDocumentFromBody(body!)
+  return createDOM(body!)
 }
 
 describe('extractPlayer should return a correct player object', () => {
   let player: Player
   beforeAll(async () => {
     const id = 4846
-    const document = await createDocumentFromFile(`Player_${id}.html`)
+    const document = await createDOMFromFile(`Player_${id}.html`)
     player = extractPlayer(document, id)
   })
 
@@ -43,7 +43,7 @@ describe('extractTeam should return a correct team object', () => {
   let team: Team
   beforeAll(async () => {
     const id = 49032
-    const document = await createDocumentFromFile(`Team_${id}.html`)
+    const document = await createDOMFromFile(`Team_${id}.html`)
     team = extractTeam(document, id)
   })
 
@@ -62,17 +62,29 @@ describe('extractTeam should return a correct team object', () => {
 
 describe('extractTourResults should return an array of correct Tour_Result objects', () => {
   let results: Tour_Result[] = []
+  const tour_DVV_ID = 10477
   beforeAll(async () => {
-    const id = 10477
-    const document = await createDocumentFromFile(`TourResult_${id}.html`)
-    results = extractTourResults(document, id)
+    const document = await createDOMFromFile(`TourResult_${tour_DVV_ID}.html`)
+    results = extractTourResults(document, tour_DVV_ID)
   })
 
-  test('results is not empty', () => {
-    expect(results.length).toBeGreaterThan(0)
+  test('31 results should be returned', () => {
+    expect(results.length).toBe(31)
   })
 
-  // test('result first object', () => {
-  //   expect(team.Player_1_DVV_ID).toBe(55957)
-  // })
+  test('first item should be first place', () => {
+    expect(results[0].Place).toBe(1)
+  })
+
+  test('last item should have 0 points', () => {
+    expect(results[results.length - 1].Points).toBe(0)
+  })
+
+  test('fifth item should have 41353 as team id', () => {
+    expect(results[4].Team_DVV_ID).toBe(41353)
+  })
+
+  test('result DVV_ID should be tournament id', () => {
+    expect(results[0].DVV_ID).toBe(tour_DVV_ID)
+  })
 })
