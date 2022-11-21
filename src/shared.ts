@@ -1,16 +1,18 @@
+import { JSDOM } from 'jsdom'
+
 export interface Participation {
   teamID: number
   tournamentID: number
 }
 
 export interface Team {
-  teamID: number
+  DVV_ID: number
   Player_1_ID: number
   Player_2_ID: number
 }
 
 export interface Player {
-  playerID: number
+  DVV_ID: number
   firstName: string
   lastName: string
   club: string
@@ -23,6 +25,10 @@ export enum Tables {
   Players = 'Players',
   Teams = 'Teams',
   Participations = 'Participations'
+}
+
+export function createDocumentFromBody(body: string) {
+  return new JSDOM(body).window.document
 }
 
 /**
@@ -42,5 +48,9 @@ export class DvvURLs {
 
   static Team(id: number) {
     return `${DvvURLs.base}/team.php?id=${id}`
+  }
+
+  static Tour_Result(id: number) {
+    return `${DvvURLs.base}/tur-er.php?id=${id}`
   }
 }

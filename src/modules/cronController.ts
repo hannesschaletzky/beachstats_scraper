@@ -2,10 +2,9 @@
 
 import { extractPlayer } from './extract/extractPlayer'
 import { DB } from '../db/queries'
-import { DvvURLs, Tables } from '../shared'
+import { createDocumentFromBody, DvvURLs, Tables } from '../shared'
 import cron from 'node-cron'
 import { scrapeBody } from 'scraper/got-scraping'
-import { JSDOM } from 'jsdom'
 
 /**
  * Handles the cron job scraping logic
@@ -29,7 +28,7 @@ export class CronController {
 const scrapeAndSavePlayer = async (playerID: number) => {
   const url = DvvURLs.Player(playerID)
   const body = await scrapeBody(url)
-  const document = new JSDOM(body).window.document
+  const document = createDocumentFromBody(body)
   const player = extractPlayer(document, playerID)
   DB.insert.player(player)
 }

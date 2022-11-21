@@ -10,7 +10,7 @@ export function extractTeam(document: Document, teamID: number): Team {
 
   // extract player IDs and save as team
   const team: Team = {
-    teamID: teamID,
+    DVV_ID: teamID,
     Player_1_ID: -1,
     Player_2_ID: -1
   }

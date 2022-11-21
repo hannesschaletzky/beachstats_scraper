@@ -12,7 +12,7 @@ export function extractPlayer(document: Document, playerID: number): Player {
 
   // extract player information and save as player
   const player: Player = {
-    playerID: playerID,
+    DVV_ID: playerID,
     firstName: '',
     lastName: '',
     club: ''
