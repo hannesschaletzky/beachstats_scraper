@@ -1,5 +1,5 @@
-import { Player, Team, Tables } from '../shared'
-import Pool from './pool'
+import { Player, Team, Tables } from 'shared'
+import Pool from 'db/pool'
 
 function executeInsert(query: string, values: (string | number)[]) {
   Pool.connect().then((client) => {

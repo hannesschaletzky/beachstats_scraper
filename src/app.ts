@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv'
 dotenv.config()
-import { setupExpressServer } from './server/server'
+import { setupExpressServer } from 'server/server'
 import { CronController } from 'modules/cronController'
 import { saveBodyAsFile } from 'scraper/FS'
 import { DvvURLs } from 'shared'
