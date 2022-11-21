@@ -24,6 +24,7 @@
     "./build",
     "./migrations",
     "./setup",
-    "./.github"
+    "./.github",
+    "./pm2"
   ]
 }
