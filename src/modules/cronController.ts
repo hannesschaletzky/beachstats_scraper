@@ -22,7 +22,7 @@ export class CronController {
     const maxID = await DB.ID.max(Tables.Players)
     let id = 1
     if (maxID != null) {
-      id = maxID
+      id = maxID + 1
     }
     cron.schedule('*/2 * * * * *', () => {
       console.log(id)

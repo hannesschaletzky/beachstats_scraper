@@ -12,7 +12,8 @@ module.exports = {
       node_args: '-r ts-node/register -r tsconfig-paths/register',
       env: {
         // https://github.com/dividab/tsconfig-paths#with-node
-        TS_NODE_BASEURL: './build'
+        TS_NODE_BASEURL: './build',
+        NODE_ENV: 'production'
       }
     }
   ]
