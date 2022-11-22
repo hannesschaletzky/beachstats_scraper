@@ -53,19 +53,15 @@ export class DB {
     }
   }
   static ID = {
-    max(table: Tables): Promise<number> {
+    max(table: Tables): Promise<number | null> {
       return new Promise<number>((resolve, reject) => {
         Pool.connect().then((client) => {
           client
             .query(`SELECT MAX("DVV_ID") FROM public."${table}"`)
             .then((res) => {
               client.release()
-              let id = res.rows[0].max
+              const id = res.rows[0].max
               console.log(`${table} max id: ${id}`)
-              if (id == null) {
-                console.log('starting at 1')
-                id = 1
-              }
               resolve(id)
             })
             .catch((err) => {

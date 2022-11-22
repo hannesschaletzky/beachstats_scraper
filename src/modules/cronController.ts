@@ -18,19 +18,16 @@ import { extractTeam } from './extract/extractTeam'
  */
 export class CronController {
   static async startPlayers() {
-    const missingIDs = await DB.ID.missing(Tables.Players)
-    let maxID = await DB.ID.max(Tables.Players)
-    let id: number
+    // const missingIDs = await DB.ID.missing(Tables.Players)
+    const maxID = await DB.ID.max(Tables.Players)
+    let id = 1
+    if (maxID != null) {
+      id = maxID
+    }
     cron.schedule('*/2 * * * * *', () => {
-      // start with all missing ids, continue starting from maxid
-      if (missingIDs.length > 0) {
-        id = missingIDs.pop()!
-      } else {
-        maxID++
-        id = maxID
-      }
-      scrapeAndSavePlayer(id)
       console.log(id)
+      scrapeAndSavePlayer(id)
+      id++
     })
   }
   // static async startTeams() {
@@ -58,16 +55,3 @@ const scrapeAndSavePlayer = async (playerID: number) => {
 //   const player = extractTeam(document, teamID)
 //   DB.insert.team(player)
 // }
-
-// team & participations
-// const teamID = 51076
-// const teamURL = ScrapingURLs.Team(teamID)
-// fetchHTML(teamURL).then((document) => {
-//   const team = extractTeam(document, teamID)
-//   console.log(team)
-//   DB.insert.team(team)
-
-//   const participations = extractParticipations(document, teamID)
-//   console.log(participations)
-//   DB.insert.participations(participations)
-// })
