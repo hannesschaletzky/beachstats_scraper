@@ -1,7 +1,7 @@
 import * as dotenv from 'dotenv'
 dotenv.config()
 import { setupExpressServer } from 'server/server'
-import { CronController } from 'modules/cronController'
+import { CronController } from 'modules/cron/cronController'
 import { saveBodyAsFile } from 'scraper/FS'
 import { DvvURLs, Tables } from 'shared'
 import { DB } from 'db/queries'
@@ -15,11 +15,11 @@ setupExpressServer().then((server) => {
   })
 })
 
-CronController.startPlayers()
+// CronController.startPlayersFlow()
 
-DB.ID.missing(Tables.Players).then((val) => {
-  console.log(val)
-})
+// DB.ID.missing(Tables.Players).then((val) => {
+//   console.log(val)
+// })
 
 // eslint-disable-next-line no-constant-condition
 if (false) {
