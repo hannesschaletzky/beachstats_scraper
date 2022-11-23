@@ -126,8 +126,8 @@ export class CronController {
     Start: {
       Regular() {
         emitter.on('Teams_NotFound', () => {
-          emitter.removeAllListeners('Teams_NotFound')
-          emitter.emit('Players_nextJob', Jobname.Teams_Regular)
+          // emitter.removeAllListeners('Teams_NotFound')
+          // emitter.emit('Players_nextJob', Jobname.Teams_Regular)
         })
         JobsTeams.startTeamsFromMaxID(interval).then((task) => {
           CronController.addJob(Jobname.Teams_Regular, task)
