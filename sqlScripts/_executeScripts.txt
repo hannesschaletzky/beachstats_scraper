@@ -1,0 +1,2 @@
+psql -U hannes -d beachstats -a -f sqlScripts/DB_allTables_size.sql
+
