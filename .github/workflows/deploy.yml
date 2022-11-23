@@ -1,8 +1,16 @@
 name: CI
 on: [push]
 jobs:
+  test:
+    name: 'Automated Tests'
+    runs-on: ubuntu-latest
+    steps:
+      - name: print root
+        run: exit 1
+
   deploy:
     name: 'Droplet Deploy'
+    needs: test
     runs-on: ubuntu-latest
     steps:
       # https://blog.benoitblanchon.fr/github-action-run-ssh-commands/
