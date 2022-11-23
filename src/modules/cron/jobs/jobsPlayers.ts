@@ -3,12 +3,11 @@ import { extractPlayer } from 'modules/extract/extractPlayer'
 import { DB } from 'db/queries'
 import { createDOM, DvvURLs, Tables } from 'shared'
 import { scrapeBody } from 'scraper/got-scraping'
-import { emitter } from './emitter'
+import { emitter } from '../emitter'
 
-export const startPlayers = async (interval: string) => {
-  // const missingIDs = await DB.ID.missing(Tables.Players)
-  const maxID = await DB.ID.max(Tables.Players)
+export const startPlayersFromMaxID = async (interval: string) => {
   let id = 1
+  const maxID = await DB.ID.max(Tables.Players)
   if (maxID != null) {
     id = maxID + 1
   }
@@ -16,7 +15,6 @@ export const startPlayers = async (interval: string) => {
     const player = await scrapePlayer(id)
     if (player) {
       DB.insert.player(player)
-      emitter.emit('Players_EmptyPage')
     } else {
       emitter.emit('Players_EmptyPage')
     }
@@ -51,11 +49,3 @@ async function scrapePlayer(id: number) {
   const document = createDOM(body)
   return extractPlayer(document, id)
 }
-
-// const scrapeAndSaveTeam = async (teamID: number) => {
-//   const url = DvvURLs.Team(teamID)
-//   const body = await scrapeBody(url)
-//   const document = createDOM(body)
-//   const player = extractTeam(document, teamID)
-//   DB.insert.team(player)
-// }

@@ -15,7 +15,7 @@ setupExpressServer().then((server) => {
   })
 })
 
-// CronController.startPlayersFlow()
+CronController.start()
 
 // DB.ID.missing(Tables.Players).then((val) => {
 //   console.log(val)

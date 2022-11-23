@@ -8,7 +8,8 @@ export function extractPlayer(
     document.querySelectorAll('table')
   )
   if (tables.length < 5) {
-    throw Error(`html of player ${playerID} must contain at least 5 tables`)
+    console.error(`html of player ${playerID} must contain at least 5 tables`)
+    return undefined
   }
 
   // extract player information and save as player

@@ -9,7 +9,7 @@ CREATE ROLE hannes WITH
   CREATEDB
   NOCREATEROLE
   NOREPLICATION
-  PASSWORD '123456';
+  PASSWORD '<insertGoodPasswordHere>';
  
 # check if role exists
 \du

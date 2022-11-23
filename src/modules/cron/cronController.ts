@@ -1,19 +1,21 @@
 import cron from 'node-cron'
 import { emitter } from './emitter'
-import * as Jobs from './cronJobs'
+import * as JobsPlayers from './jobs/jobsPlayers'
+import * as JobsTeams from './jobs/jobsTeams'
 import { DB } from 'db/queries'
 import { Tables } from 'shared'
 
 export enum Jobname {
   Players_Missing = 'Players_Missing',
-  Players_Regular = 'Players_Regular'
+  Players_Regular = 'Players_Regular',
+  Teams_Regular = 'Teams_Regular'
 }
 
 const interval = '*/2 * * * * *'
 
 export class CronController {
-  static runningJobs: { name: Jobname; task: cron.ScheduledTask }[] = []
-  private static players_emptyPageCounter: number
+  // general methods / vars for cron job controlling
+  private static runningJobs: { name: Jobname; task: cron.ScheduledTask }[] = []
 
   private static deleteJob(name: Jobname) {
     let index = -1
@@ -30,28 +32,39 @@ export class CronController {
   }
 
   private static addJob(name: Jobname, task: cron.ScheduledTask) {
-    CronController.runningJobs.push({
+    this.runningJobs.push({
       name: name,
       task: task
     })
   }
 
+  // module specific
+  private static players_emptyPageCounter: number
+
+  private static players_maxEmptyPage = 3
+
   /**
-   * Players job executor
+   * Job executor
    */
-  static async startPlayersFlow() {
+  static async start() {
     // job order
     const jobs: { name: Jobname; exec: () => void }[] = [
+      // {
+      //   name: Jobname.Players_Missing,
+      //   exec: () => {
+      //     this.Players.Start.Missing()
+      //   }
+      // },
+      // {
+      //   name: Jobname.Players_Regular,
+      //   exec: () => {
+      //     this.Players.Start.Regular()
+      //   }
+      // },
       {
-        name: Jobname.Players_Missing,
+        name: Jobname.Teams_Regular,
         exec: () => {
-          CronController.Players.Start.Missing()
-        }
-      },
-      {
-        name: Jobname.Players_Regular,
-        exec: () => {
-          CronController.Players.Start.Regular()
+          this.Teams.Start.Regular()
         }
       }
     ]
@@ -81,22 +94,43 @@ export class CronController {
           emitter.emit('Players_nextJob', Jobname.Players_Missing)
         })
         const missingIDs = await DB.ID.missing(Tables.Players)
-        Jobs.startPlayersMissingIDs(interval, missingIDs).then((task) => {
-          CronController.addJob(Jobname.Players_Missing, task)
-        })
+        JobsPlayers.startPlayersMissingIDs(interval, missingIDs).then(
+          (task) => {
+            CronController.addJob(Jobname.Players_Missing, task)
+          }
+        )
       },
       Regular() {
         CronController.players_emptyPageCounter = 0
         emitter.on('Players_EmptyPage', () => {
           CronController.players_emptyPageCounter++
-          if (CronController.players_emptyPageCounter >= 3) {
-            console.log('three empty pages in a row, stopping job')
+          if (
+            CronController.players_emptyPageCounter >=
+            CronController.players_maxEmptyPage
+          ) {
+            console.log(
+              `${CronController.players_maxEmptyPage} empty pages in a row, stopping job`
+            )
             emitter.removeAllListeners('Players_EmptyPage')
             emitter.emit('Players_nextJob', Jobname.Players_Regular)
           }
         })
-        Jobs.startPlayers(interval).then((task) => {
+        JobsPlayers.startPlayersFromMaxID(interval).then((task) => {
           CronController.addJob(Jobname.Players_Regular, task)
+        })
+      }
+    }
+  }
+
+  private static Teams = {
+    Start: {
+      Regular() {
+        emitter.on('Teams_NotFound', () => {
+          emitter.removeAllListeners('Teams_NotFound')
+          emitter.emit('Players_nextJob', Jobname.Teams_Regular)
+        })
+        JobsTeams.startTeamsFromMaxID(interval).then((task) => {
+          CronController.addJob(Jobname.Teams_Regular, task)
         })
       }
     }
