@@ -1,9 +1,11 @@
 # adjust language analysis of github
-# documentation: https://github.com/github/linguist/blob/master/docs/overrides.md
+# https://github.com/github/linguist/blob/master/docs/overrides.md
 
 # ignore by setting it to category linguist-documentation
-# see https://github.com/github/linguist/blob/master/docs/overrides.md#documentation
 testFiles/* linguist-documentation
 pm2/* linguist-documentation
 setup/* linguist-documentation
 sqlScripts/* linguist-documentation
+
+# add by setting it to category linguist-detectable
+*.sql linguist-detectable
