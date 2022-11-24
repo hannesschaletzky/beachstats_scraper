@@ -3,7 +3,5 @@
 
 /node_modules
 /build
-/storage
 
-*.html
 *.csv

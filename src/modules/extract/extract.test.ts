@@ -3,7 +3,7 @@
 import { readContentFromFile } from '../../scraper/FS'
 import { createDOM, Player, Team, Tour_Result } from '../../shared'
 import { extractPlayer } from './extractPlayer'
-import { extractTeam } from './extractTeam'
+import { extractTeam, TeamErrors } from './extractTeam'
 import { extractTourResults } from './extractTourResults'
 
 async function createDOMFromFile(filename: string) {
@@ -19,7 +19,11 @@ describe('extractPlayer should return a correct player object', () => {
   beforeAll(async () => {
     const id = 4846
     const document = await createDOMFromFile(`Player_${id}.html`)
-    player = extractPlayer(document, id)
+    const result = extractPlayer(document, id)
+    if (result == undefined) {
+      throw Error('extractPlayer did not return player')
+    }
+    player = result
   })
 
   test('firstName set', () => {
@@ -44,7 +48,15 @@ describe('extractTeam should return a correct team object', () => {
   beforeAll(async () => {
     const id = 49032
     const document = await createDOMFromFile(`Team_${id}.html`)
-    team = extractTeam(document, id)
+    const result = extractTeam(document, id)
+    if (
+      result == TeamErrors.notFound ||
+      result == TeamErrors.incorrectHTML ||
+      result == TeamErrors.insufficientPlayers
+    ) {
+      throw Error('extractTeam did not return team')
+    }
+    team = result
   })
 
   test('DVV_ID set', () => {

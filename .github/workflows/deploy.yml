@@ -2,14 +2,14 @@ name: CI
 on: [push]
 jobs:
   test:
-    name: 'Automated Tests'
+    name: 'test'
     runs-on: ubuntu-latest
     steps:
       - name: print root
         run: exit 1
 
   deploy:
-    name: 'Droplet Deploy'
+    name: 'deploy'
     needs: test
     runs-on: ubuntu-latest
     steps:
