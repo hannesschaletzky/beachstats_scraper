@@ -5,7 +5,6 @@
 testFiles/* linguist-documentation
 pm2/* linguist-documentation
 setup/* linguist-documentation
-sqlScripts/* linguist-documentation
 
 # add by setting it to category linguist-detectable
 *.sql linguist-detectable
