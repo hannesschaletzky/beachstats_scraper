@@ -1,7 +1,7 @@
 {
-  "name": "beachstats",
+  "name": "beachstats_scraper",
   "version": "1.0.0",
-  "description": "Beach Volleyball Statistics Scraper / Backend",
+  "description": "Beach Volleyball Statistics Scraper",
   "engines": {
     "node": ">=14.16"
   },
@@ -18,14 +18,11 @@
   "author": "Hannes Schaletzky",
   "license": "MIT",
   "dependencies": {
-    "@types/express": "^4.17.13",
     "@types/jest": "^29.2.3",
     "@types/jsdom": "^20.0.0",
     "@types/node": "^18.11.9",
     "@types/node-cron": "^3.0.6",
-    "@types/supertest": "^2.0.11",
     "dotenv": "^16.0.0",
-    "express": "^4.17.2",
     "got-scraping": "^3.2.12",
     "jest": "^29.3.1",
     "jsdom": "^20.0.1",
@@ -33,7 +30,6 @@
     "node-pg-migrate": "^6.2.2",
     "pg": "^8.8.0",
     "rimraf": "^3.0.2",
-    "supertest": "^6.2.2",
     "tiny-typed-emitter": "^2.1.0",
     "ts-jest": "^29.0.3",
     "ts-node": "^10.9.1",

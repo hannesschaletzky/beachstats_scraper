@@ -1,9 +1,0 @@
-- scrape tournament results 
-- scrape tournament infos 
-- execute for 5000 teams 
-- execute for 5000 players 
-
-- write tests when more advanced  
-
-- setup database on VPS
-- setup pipeline

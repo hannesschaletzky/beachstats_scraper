@@ -1,19 +1,11 @@
 import * as dotenv from 'dotenv'
 dotenv.config()
-import { setupExpressServer } from 'server/server'
 import { CronController } from 'modules/cron/cronController'
 import { saveBodyAsFile } from 'scraper/FS'
 import { DvvURLs, Tables } from 'shared'
 import { DB } from 'db/queries'
 
-const hostname = process.env.HOSTNAME
-const port = process.env.PORT
-
-setupExpressServer().then((server) => {
-  server.listen(port, () => {
-    console.log(`Server running on ${hostname}:${port}/`)
-  })
-})
+console.log(`Scraper started successfully`)
 
 CronController.start()
 
