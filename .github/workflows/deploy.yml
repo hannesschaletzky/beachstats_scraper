@@ -1,50 +1,81 @@
 name: CI
 on: [push]
 jobs:
-  test:
-    name: 'test'
+  container-job:
+    # https://remarkablemark.org/blog/2021/03/14/setup-postgresql-in-github-actions/
     runs-on: ubuntu-latest
-    steps:
-      # install postgres
-      - uses: harmon758/postgresql-action@v1
-        with:
-          postgresql version: '14.6'
-      - name: print root
-        run: exit 1
+    container: node:latest
 
-  deploy:
-    name: 'deploy'
-    # needs: test
-    runs-on: ubuntu-latest
-    steps:
-      # https://blog.benoitblanchon.fr/github-action-run-ssh-commands/
-      - name: Configure SSH
-        run: |
-          mkdir -p ~/.ssh/
-          echo "$SSH_KEY" > ~/.ssh/droplet.key
-          chmod 600 ~/.ssh/droplet.key
-          cat >>~/.ssh/config <<END
-          Host droplet
-            HostName $SSH_HOST
-            User root
-            IdentityFile ~/.ssh/droplet.key
-            StrictHostKeyChecking no
-          END
+    services:
+      postgres: # label to access the service container
+        image: postgres:latest
         env:
-          SSH_KEY: ${{ secrets.SSHKEY }}
-          SSH_HOST: ${{ secrets.HOST }}
+          POSTGRES_DB: postgres # default
+          POSTGRES_USER: postgres # default
+          POSTGRES_PASSWORD: mypsqlpassword # required
+        ports:
+          # maps tcp port 5432 on service container to the host
+          - 5432:5432
+        # checks for postgres startup
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: install psql client
+        run: |
+          apt-get update
+          apt-get install --yes postgresql-client
 
-      - name: print root
-        run: ssh droplet 'whoami'
+      - name: execute query
+        run: psql -h postgres -d postgres -U postgres -c 'SELECT 1;'
+        env:
+          # postgress password is required
+          PGPASSWORD: mypsqlpassword
 
-      - name: update repo
-        run: ssh droplet 'cd /repos/beachstats_scraper/ && git pull && npm install'
+      - name: pull repo
+        uses: actions/checkout@v3
 
-      - name: build repo
-        run: ssh droplet 'cd /repos/beachstats_scraper/ && npm run build'
+      - name: npm ci
+        run: npm ci
 
-      - name: copy .env
-        run: ssh droplet 'cp /repos/beachstats_scraper/.env /repos/beachstats_scraper/build/'
+      # - name: run migrations
+      #   run: npm run migrate up
 
-      - name: reload pm2 process
-        run: ssh droplet 'source ~/.nvm/nvm.sh && cd /repos/beachstats_scraper/ && pm2 reload pm2/prod.config.js'
+  # deploy:
+  #   name: 'deploy'
+  #   # needs: test
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     # https://blog.benoitblanchon.fr/github-action-run-ssh-commands/
+  #     - name: Configure SSH
+  #       run: |
+  #         mkdir -p ~/.ssh/
+  #         echo "$SSH_KEY" > ~/.ssh/droplet.key
+  #         chmod 600 ~/.ssh/droplet.key
+  #         cat >>~/.ssh/config <<END
+  #         Host droplet
+  #           HostName $SSH_HOST
+  #           User root
+  #           IdentityFile ~/.ssh/droplet.key
+  #           StrictHostKeyChecking no
+  #         END
+  #       env:
+  #         SSH_KEY: ${{ secrets.SSHKEY }}
+  #         SSH_HOST: ${{ secrets.HOST }}
+
+  #     - name: print root
+  #       run: ssh droplet 'whoami'
+
+  #     - name: update repo
+  #       run: ssh droplet 'cd /repos/beachstats_scraper/ && git pull && npm install'
+
+  #     - name: build repo
+  #       run: ssh droplet 'cd /repos/beachstats_scraper/ && npm run build'
+
+  #     - name: copy .env
+  #       run: ssh droplet 'cp /repos/beachstats_scraper/.env /repos/beachstats_scraper/build/'
+
+  #     - name: reload pm2 process
+  #       run: ssh droplet 'source ~/.nvm/nvm.sh && cd /repos/beachstats_scraper/ && pm2 reload pm2/prod.config.js'
