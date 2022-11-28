@@ -5,6 +5,10 @@ jobs:
     name: 'test'
     runs-on: ubuntu-latest
     steps:
+      # install postgres
+      - uses: harmon758/postgresql-action@v1
+        with:
+          postgresql version: '14.6'
       - name: print root
         run: exit 1
 
