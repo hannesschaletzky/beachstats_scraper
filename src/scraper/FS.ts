@@ -1,10 +1,11 @@
 import fs from 'fs'
 import { scrapeBody } from '../scraper/got-scraping'
+import appRoot from 'app-root-path' // https://github.com/inxilpro/node-app-root-path
 
 const fsPromises = fs.promises
 
 function concatTestingFilesPath(filename: string) {
-  return `${__dirname}/testFiles/${filename}`
+  return `${appRoot.toString()}/testFiles/${filename}`
 }
 
 export async function saveBodyAsFile(url: string, filename: string) {

@@ -1,22 +1,18 @@
 name: CI
 on: [push]
 jobs:
-  container-job:
+  test:
     # https://remarkablemark.org/blog/2021/03/14/setup-postgresql-in-github-actions/
     runs-on: ubuntu-latest
     container: node:latest
 
     services:
-      postgres: # label to access the service container
+      postgres: # access service through this name
         image: postgres:latest
         env:
-          POSTGRES_DB: postgres # default
-          POSTGRES_USER: postgres # default
-          POSTGRES_PASSWORD: mypsqlpassword # required
-        ports:
-          # maps tcp port 5432 on service container to the host
-          - 5432:5432
-        # checks for postgres startup
+          POSTGRES_DB: beachstats
+          POSTGRES_USER: hannes
+          POSTGRES_PASSWORD: mypsqlpassword
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -29,9 +25,8 @@ jobs:
           apt-get install --yes postgresql-client
 
       - name: execute query
-        run: psql -h postgres -d postgres -U postgres -c 'SELECT 1;'
+        run: psql -h postgres -d beachstats -U hannes -c 'SELECT 1;'
         env:
-          # postgress password is required
           PGPASSWORD: mypsqlpassword
 
       - name: pull repo
@@ -40,8 +35,20 @@ jobs:
       - name: npm ci
         run: npm ci
 
-      # - name: run migrations
-      #   run: npm run migrate up
+      - name: run migrations
+        run: npm run migrate up
+        env:
+          PGHOST: postgres # service name
+          PGPORT: 5432
+          PGUSER: hannes
+          PGDATABASE: beachstats
+          PGPASSWORD: mypsqlpassword
+
+      - name: change permissions of testFiles # to be accessible by tests
+        run: chmod -R 777 testFiles
+
+      - name: run tests
+        run: npm run test
 
   # deploy:
   #   name: 'deploy'
