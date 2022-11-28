@@ -7,7 +7,7 @@
 module.exports = {
   apps: [
     {
-      name: 'beachstats',
+      name: 'beachstats_scraper',
       script: './build/app.js',
       node_args: '-r ts-node/register -r tsconfig-paths/register',
       env: {
