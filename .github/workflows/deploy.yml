@@ -2,11 +2,12 @@ name: CI
 on: [push]
 jobs:
   test:
-    # https://remarkablemark.org/blog/2021/03/14/setup-postgresql-in-github-actions/
     runs-on: ubuntu-latest
     container: node:latest
 
     services:
+      # https://remarkablemark.org/blog/2021/03/14/setup-postgresql-in-github-actions/
+      # https://docs.github.com/en/actions/using-containerized-services/creating-postgresql-service-containers
       postgres: # access service through this name
         image: postgres:latest
         env:
