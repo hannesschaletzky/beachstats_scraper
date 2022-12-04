@@ -1,27 +1,15 @@
-/* eslint-disable no-async-promise-executor */
-
 import { Player, Team, Tables } from 'shared'
 import Pool from './pool'
 
-async function executeInsert(
-  query: string,
-  values: (string | number)[]
-): Promise<string> {
-  return new Promise(async (resolve, reject) => {
+async function executeInsert(query: string, values: (string | number)[]) {
+  try {
     const client = await Pool.connect()
-    client
-      .query(query, values)
-      .then((res) => {
-        console.log(`${res.command} of ${values}`)
-        resolve(res.command)
-      })
-      .catch((err) => {
-        reject(err)
-      })
-      .finally(() => {
-        client.release()
-      })
-  })
+    const res = await client.query(query, values)
+    console.log(`${res.command} of ${values}`)
+    client.release()
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 export class DB {
