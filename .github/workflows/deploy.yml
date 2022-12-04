@@ -50,12 +50,12 @@ jobs:
 
       - name: run tests
         run: npm run test
-        env:
-          PGHOST: postgres # service name
-          PGPORT: 5432
-          PGUSER: hannes
-          PGDATABASE: postgres
-          PGPASSWORD: mypsqlpassword
+        # env:
+        #   PGHOST: postgres # service name
+        #   PGPORT: 5432
+        #   PGUSER: hannes
+        #   PGDATABASE: postgres
+        #   PGPASSWORD: mypsqlpassword
 
   # deploy:
   #   name: 'deploy'
