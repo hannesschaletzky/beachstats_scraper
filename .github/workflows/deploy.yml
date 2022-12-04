@@ -11,7 +11,7 @@ jobs:
       postgres: # access service through this name
         image: postgres:latest
         env:
-          POSTGRES_DB: beachstats
+          # POSTGRES_DB: beachstats
           POSTGRES_USER: hannes
           POSTGRES_PASSWORD: mypsqlpassword
         options: >-
@@ -26,7 +26,7 @@ jobs:
           apt-get install --yes postgresql-client
 
       - name: execute query
-        run: psql -h postgres -d beachstats -U hannes -c 'SELECT 1;'
+        run: psql -h postgres -d postgres -U hannes -c 'SELECT 1;'
         env:
           PGPASSWORD: mypsqlpassword
 
@@ -36,14 +36,14 @@ jobs:
       - name: npm ci
         run: npm ci
 
-      - name: run migrations
-        run: npm run migrate up
-        env:
-          PGHOST: postgres # service name
-          PGPORT: 5432
-          PGUSER: hannes
-          PGDATABASE: beachstats
-          PGPASSWORD: mypsqlpassword
+      # - name: run migrations
+      #   run: npm run migrate up
+      #   env:
+      #     PGHOST: postgres # service name
+      #     PGPORT: 5432
+      #     PGUSER: hannes
+      #     PGDATABASE: beachstats
+      #     PGPASSWORD: mypsqlpassword
 
       - name: change permissions of testFiles # to be accessible by tests
         run: chmod -R 777 testFiles
