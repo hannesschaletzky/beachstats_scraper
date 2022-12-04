@@ -9,6 +9,7 @@ async function setup() {
       on host:    ${process.env.PGHOST}:${process.env.PGPORT} 
       with user:  ${process.env.PGUSER}`
   )
+  console.log(process.argv)
 
   const pool = new Pool({
     host: process.env.PGHOST,

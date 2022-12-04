@@ -13,22 +13,22 @@ jobs:
         env:
           # POSTGRES_DB: beachstats
           POSTGRES_USER: hannes
-          POSTGRES_PASSWORD: mypsqlpassword
+          POSTGRES_PASSWORD: 123456
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
     steps:
-      - name: install psql client
-        run: |
-          apt-get update
-          apt-get install --yes postgresql-client
+      # - name: install psql client
+      #   run: |
+      #     apt-get update
+      #     apt-get install --yes postgresql-client
 
-      - name: execute query
-        run: psql -h postgres -d postgres -U hannes -c 'SELECT 1;'
-        env:
-          PGPASSWORD: mypsqlpassword
+      # - name: execute query
+      #   run: psql -h postgres -d postgres -U hannes -c 'SELECT 1;'
+      #   env:
+      #     PGPASSWORD: 123456
 
       - name: pull repo
         uses: actions/checkout@v3
@@ -36,26 +36,11 @@ jobs:
       - name: npm ci
         run: npm ci
 
-      # - name: run migrations
-      #   run: npm run migrate up
-      #   env:
-      #     PGHOST: postgres # service name
-      #     PGPORT: 5432
-      #     PGUSER: hannes
-      #     PGDATABASE: beachstats
-      #     PGPASSWORD: mypsqlpassword
-
       - name: change permissions of testFiles # to be accessible by tests
         run: chmod -R 777 testFiles
 
       - name: run tests
-        run: npm run test
-        # env:
-        #   PGHOST: postgres # service name
-        #   PGPORT: 5432
-        #   PGUSER: hannes
-        #   PGDATABASE: postgres
-        #   PGPASSWORD: mypsqlpassword
+        run: npm run test-pipeline
 
   # deploy:
   #   name: 'deploy'

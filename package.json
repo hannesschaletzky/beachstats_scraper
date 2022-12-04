@@ -11,7 +11,8 @@
     "lint-and-fix": "eslint . --ext .ts --fix",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
     "setup-test-db": "ts-node src/db/setup-test-db.ts && npm run migrate up",
-    "test": "env-cmd -f .env.test npm run setup-test-db && env-cmd -f .env.test jest --config",
+    "test-local": "env-cmd -f .env.test.local npm run setup-test-db && env-cmd -f .env.test.local jest --config",
+    "test-pipeline": "env-cmd -f .env.test.pipeline npm run setup-test-db && env-cmd -f .env.test.pipeline jest --config",
     "migrate": "node-pg-migrate",
     "build": "rimraf ./build && tsc"
   },
