@@ -8,8 +8,8 @@ pool.on('error', (err) => {
   process.exit(-1)
 })
 
-pool.query('SELECT NOW()').then((res) => {
-  console.log(`connected to DB at ${res.rows[0].now}`)
-})
+// pool.query('SELECT NOW()').then((res) => {
+//   console.log(`connected to DB at ${res.rows[0].now}`)
+// })
 
 export default pool

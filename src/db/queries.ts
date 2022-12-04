@@ -1,17 +1,25 @@
+/* eslint-disable no-async-promise-executor */
+
 import { Player, Team, Tables } from 'shared'
 import Pool from './pool'
 
-function executeInsert(query: string, values: (string | number)[]) {
-  Pool.connect().then((client) => {
+async function executeInsert(
+  query: string,
+  values: (string | number)[]
+): Promise<string> {
+  return new Promise(async (resolve, reject) => {
+    const client = await Pool.connect()
     client
       .query(query, values)
       .then((res) => {
-        client.release()
-        console.log(res.command)
+        console.log(`${res.command} of ${values}`)
+        resolve(res.command)
       })
       .catch((err) => {
+        reject(err)
+      })
+      .finally(() => {
         client.release()
-        console.error(err.stack)
       })
   })
 }
@@ -19,7 +27,7 @@ function executeInsert(query: string, values: (string | number)[]) {
 export class DB {
   static insert = {
     player(player: Player) {
-      executeInsert(
+      return executeInsert(
         `INSERT INTO "Players"
         VALUES (
           $1,
@@ -30,7 +38,7 @@ export class DB {
       )
     },
     team(team: Team) {
-      executeInsert(
+      return executeInsert(
         `INSERT INTO "Teams"
         VALUES (
           $1,

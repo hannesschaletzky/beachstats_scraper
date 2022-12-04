@@ -3,6 +3,7 @@ import type { Config } from '@jest/types'
 // Sync object
 const config: Config.InitialOptions = {
   verbose: true,
+  detectOpenHandles: true,
   transform: {
     '^.+\\.(ts|tsx)$': 'ts-jest'
   }
