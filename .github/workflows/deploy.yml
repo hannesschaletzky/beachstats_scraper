@@ -11,7 +11,6 @@ jobs:
       postgres: # access service through this name
         image: postgres:latest
         env:
-          # POSTGRES_DB: beachstats
           POSTGRES_USER: hannes
           POSTGRES_PASSWORD: 123456
         options: >-
@@ -34,11 +33,6 @@ jobs:
 
       - name: build
         run: npm run build
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: scraper
-          path: build/
 
   # deploy:
   #   name: 'deploy'
