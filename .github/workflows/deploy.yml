@@ -20,16 +20,6 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     steps:
-      # - name: install psql client
-      #   run: |
-      #     apt-get update
-      #     apt-get install --yes postgresql-client
-
-      # - name: execute query
-      #   run: psql -h postgres -d postgres -U hannes -c 'SELECT 1;'
-      #   env:
-      #     PGPASSWORD: 123456
-
       - name: pull repo
         uses: actions/checkout@v3
 
@@ -41,6 +31,9 @@ jobs:
 
       - name: run tests
         run: npm run test-pipeline
+
+      - name: build
+        run: npm run build
 
   # deploy:
   #   name: 'deploy'
