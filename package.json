@@ -2,23 +2,25 @@
   "name": "beachstats_scraper",
   "version": "1.0.0",
   "description": "Beach Volleyball Statistics Scraper",
+  "author": "Hannes Schaletzky",
+  "license": "MIT",
   "engines": {
     "node": ">=14.16"
   },
   "scripts": {
-    "dev": "nodemon",
+    "_": "-------------- LINT -------------- ",
     "lint": "eslint . --ext .ts",
     "lint-and-fix": "eslint . --ext .ts --fix",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
-    "setup-test-db": "ts-node src/db/setup-test-db.ts && npm run migrate up",
-    "test-local": "env-cmd -f .env.test.local npm run setup-test-db && env-cmd -f .env.test.local jest --config",
-    "test-pipeline": "env-cmd -f .env.test.pipeline npm run setup-test-db && env-cmd -f .env.test.pipeline jest --config",
+    "__": "-------------- TEST -------------- ",
+    "test-local": "env-cmd -f .env.test.local npm run _exec-test",
+    "test-pipeline": "env-cmd -f .env.test.pipeline npm run _exec-test",
+    "_exec-test": "ts-node src/db/setup-test-db.ts && npm run migrate up && jest --config",
+    "___": "-------------- OTHER -------------- ",
+    "dev": "nodemon",
     "migrate": "node-pg-migrate",
     "build": "rimraf ./build && tsc"
   },
-  "keywords": [],
-  "author": "Hannes Schaletzky",
-  "license": "MIT",
   "dependencies": {
     "@types/jest": "^29.2.3",
     "@types/jsdom": "^20.0.0",
